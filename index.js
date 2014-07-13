@@ -20,10 +20,9 @@ var _ = require('lodash');
 var bootstrap = function (server) {
   breach.init(function () {
     breach.expose('init', function (src, args, cb) {
-      var result = cache.search('firebase');
+      var result = cache.search('manager');
       var moduleNames = _.map(result, function (pkg) { return pkg.name + '@' + pkg.version; });
       console.log(moduleNames);
-      
       cb();
     });
     breach.expose('kill', function (args, cb) {
