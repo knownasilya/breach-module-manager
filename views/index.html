@@ -1,0 +1,12 @@
+doctype html
+html(lang="en")
+    body
+        h1 Breach Module Manager
+        if error
+            p= error + ': ' + errorMsg
+        form
+            label(for='q') Search for Breach modules
+            input#q(type='text',placeholder='E.g. tabs')
+            button(value='Search')
+        if result
+        
