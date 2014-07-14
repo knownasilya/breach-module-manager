@@ -1,0 +1,11 @@
+{
+  "name": "breach-module-manager",
+  "main": "index.js",
+  "version": "0.0.0",
+  "homepage": "https://github.com/mblarsen/breach-module-manager",
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "angular": "~1.2.20"
+  }
+}
