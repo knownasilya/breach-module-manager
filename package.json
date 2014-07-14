@@ -1,6 +1,6 @@
 {
   "name": "breach-module-manager",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Module manager for Breach",
   "main": "index.js",
   "scripts": {
