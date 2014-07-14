@@ -18,10 +18,12 @@ var initApp = require('./lib/app');
 function bootstrap(server) {
   breach.init(function () {
     breach.expose('init', function (src, args, cb) {
-      cache.search('manager').then(function (result) {
-        var moduleNames = _.map(result, function (pkg) { return pkg.name + '@' + pkg['dist-tags'].latest; });
-        common.log.out('Found: ' + moduleNames.join(', '));
-        cb();
+      cache.refresh().then(function () {
+        cache.search('manager').then(function (result) {
+          var moduleNames = _.map(result, function (pkg) { return pkg.name + '@' + pkg['dist-tags'].latest; });
+          common.log.out('Found: ' + moduleNames.join(', '));
+          cb();
+        });
       });
 
       common.log.out('Wait for result');

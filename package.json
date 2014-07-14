@@ -5,11 +5,14 @@
   "main": "index.js",
   "scripts": {
     "test": "node test | tap-spec",
-    "start": "node index"
+    "start": "node test/app"
   },
   "keywords": [
     "breach",
-    "breach-module"
+    "breach-module",
+    "manager",
+    "modules",
+    "packages"
   ],
   "author": {
     "name": "Michael Bøcker-Larsen",

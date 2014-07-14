@@ -1,12 +1,19 @@
-doctype html
-html(lang="en")
-    body
-        h1 Breach Module Manager
-        if error
-            p= error + ': ' + errorMsg
-        form
-            label(for='q') Search for Breach modules
-            input#q(type='text',placeholder='E.g. tabs')
-            button(value='Search')
-        if result
-        
+<!doctype html>
+<html lang="en">
+  <head>
+      <meta charset="utf-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <title>Breach Module Manager</title>
+      <meta name="description" content="">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+  </head>
+  <body>
+    <h1>Breach Module Manager</h1>
+
+    <form>
+      <label for="query">Search for Breach modules</label>
+      <input id="query" type="text" placeholder="E.g. tabs"> 
+      <button type="submit">Search</button>
+    </form>
+  </body>
+</html>
