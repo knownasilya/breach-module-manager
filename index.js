@@ -20,10 +20,13 @@ var _ = require('lodash');
 var bootstrap = function (server) {
   breach.init(function () {
     breach.expose('init', function (src, args, cb) {
-      var result = cache.search('manager');
-      var moduleNames = _.map(result, function (pkg) { return pkg.name + '@' + pkg.version; });
-      console.log(moduleNames);
-      cb();
+      cache.search('manager').then(function (result) {
+        console.log('Search complete');
+        var moduleNames = _.map(result, function (pkg) { return pkg.name + '@' + pkg.version; });
+        console.log(moduleNames);
+        cb();
+      });
+      common.log.out('Wait for result');
     });
     breach.expose('kill', function (args, cb) {
       common.exit(0);
