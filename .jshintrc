@@ -1,0 +1,6 @@
+{
+	"indent": 2,
+	"strict": false,
+	"node": true,
+	"predef": [ "require", "__dirname", "module" ]
+}
