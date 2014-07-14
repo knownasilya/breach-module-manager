@@ -21,9 +21,8 @@ var bootstrap = function (server) {
   breach.init(function () {
     breach.expose('init', function (src, args, cb) {
       cache.search('manager').then(function (result) {
-        console.log('Search complete');
-        var moduleNames = _.map(result, function (pkg) { return pkg.name + '@' + pkg.version; });
-        console.log(moduleNames);
+        var moduleNames = _.map(result, function (pkg) { return pkg.name + '@' + pkg['dist-tags'].latest; });
+        common.log.out('Found: ' + moduleNames.join(', '));
         cb();
       });
       common.log.out('Wait for result');
