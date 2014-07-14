@@ -7,7 +7,6 @@
  */
 'use strict';
 
-var http = require('http');
 var breach = require('breach_module');
 var async = require('async');
 var request = require('request');
@@ -26,7 +25,6 @@ function bootstrap(server) {
       });
 
       common.log.out('Wait for result');
-      //return cb(); //returns different 500 error
     });
     breach.expose('kill', function (args, cb) {
       common.exit(0);
