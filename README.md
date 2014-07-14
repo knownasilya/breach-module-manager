@@ -15,4 +15,4 @@ __STATE: NOT USABLE__
 
 * [DONE] Use own cache for modules instead of `$HOME/.npm/-/all/.cache.json`
 * Create interface :)
-* Look into hooking it up to core somehow, see issue #4.
+* Look into hooking it up to core somehow, see [issue #4](https://github.com/mblarsen/breach-module-manager/issues/4).
