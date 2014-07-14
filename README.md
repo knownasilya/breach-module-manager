@@ -12,7 +12,6 @@ __STATE: NOT USABLE__
 
 ## TODO
 
+* [DONE] Use own cache for modules instead of `$HOME/.npm/-/all/.cache.json`
 * Create interface :)
-* Use own cache for modules instead of `$HOME/.npm/-/all/.cache.json`
-* Looking into making it a streaming implementation, since files are big and interface needs updating.
 * Look into hooking it up to core somehow.
