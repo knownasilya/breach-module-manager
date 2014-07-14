@@ -5,19 +5,18 @@
  *
  * @author: mblarsen
  */
-"use strict"
+'use strict';
 
-var express = require('express');
 var http = require('http');
 var breach = require('breach_module');
 var async = require('async');
 var request = require('request');
-var jade = require('jade');
 var common = require('breach_module/lib/common');
-var cache = require('./lib/cache.js')
 var _ = require('lodash');
+var cache = require('./lib/cache');
+var initApp = require('./lib/app');
 
-var bootstrap = function (server) {
+function bootstrap(server) {
   breach.init(function () {
     breach.expose('init', function (src, args, cb) {
       cache.search('manager').then(function (result) {
@@ -31,24 +30,9 @@ var bootstrap = function (server) {
       common.exit(0);
     });
   });
-};
+}
 
+// Run web-server for module webapp
 (function setup() {
-  var app = express();
-
-  // TODO consider adding debug option 
-  
-  app.use('/', express.static(__dirname + '/controls'));
-  app.use(require('body-parser').urlencoded({ extended: true }));
-  app.use(require('body-parser').json());
-  app.use(require('method-override')());
-  
-  var server = http.createServer(app).listen(0, '127.0.0.1');
-
-  server.on('listening', function() {
-    var port = server.address().port;
-    common.log.out('HTTP Server started on `http://127.0.0.1:' + port + '`');
-    return bootstrap(server);
-  });
-})();
-
+  initApp(bootstrap);
+}());
