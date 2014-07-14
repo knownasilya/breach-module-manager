@@ -24,7 +24,9 @@ function bootstrap(server) {
         common.log.out('Found: ' + moduleNames.join(', '));
         cb();
       });
+
       common.log.out('Wait for result');
+      //return cb(); //returns different 500 error
     });
     breach.expose('kill', function (args, cb) {
       common.exit(0);
