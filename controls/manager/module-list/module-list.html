@@ -1,0 +1,35 @@
+<link rel="import" href="../../elements/polymer/polymer.html">
+<link rel="import" href="../../elements/core-list/core-list.html">
+<link rel="import" href="../../elements/core-item/core-item.html">
+<link rel="import" href="../../elements/core-ajax/core-ajax.html">
+
+<polymer-element name="module-list" noscript>
+  <template>
+    <style>
+      core-list {
+        overflow: visible;
+      }
+
+      core-list .item:last-child {
+        border-bottom-width: 0;
+      }
+
+      .selected {
+        font-weight: bold;
+      }
+
+      .item {
+        cursor: pointer;
+        border-bottom: 1px solid #ccc;
+        padding: 1em;
+      }
+    </style>
+
+    <core-ajax url="/modules" auto handleAs="json" response="{{modules}}"></core-ajax>
+    <core-list data="{{modules}}" height="50">
+      <template>
+        <div class="item {{ {selected: selected} | tokenList }}">{{name}}</div>
+      </template>
+    </core-list>
+  </template>
+</polymer-element>
