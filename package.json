@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "node test | tap-spec",
-    "start": "node test/app"
+    "start": "node test/app",
+    "postinstall": "./node_modules/bower/bin/bower install"
   },
   "keywords": [
     "breach",
