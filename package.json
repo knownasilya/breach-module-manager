@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "node test | tap-spec",
-    "start": "node test/app"
+    "start": "node test/app",
+    "postinstall": "./node_modules/bower/bin/bower install"
   },
   "keywords": [
     "breach",
@@ -26,7 +27,6 @@
     "breach_module": "^0.3.x",
     "express": "^4.6.1",
     "fuzzy-filter": "0.0.3",
-    "jade": "^1.3.1",
     "lodash": "^2.4.1",
     "method-override": "^2.1.1",
     "promise": "^5.0.0",
