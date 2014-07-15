@@ -2,7 +2,7 @@
 
 [![build status](http://img.shields.io/travis/mblarsen/breach-module-manager.svg)](http://travis-ci.org/mblarsen/breach-module-manager)
 [![Dependencies](http://img.shields.io/david/mblarsen/breach-module-manager.svg)](https://david-dm.org/mblarsen/breach-module-manager)
-[![NPM version](http://img.shields.io/npm/v/breach-module-manager.svg)](https://www.npmjs.org/package/breach-module-manager)
+[![NPM version](http://img.shields.io/npm/v/breach-module-manager.svg)](https://www.npmjs.org/package/breach-module-manager)  
 [![NPM](https://nodei.co/npm/breach-module-manager.png?downloads=true)](https://nodei.co/npm/breach-module-manager/)
 
 This is a module manager for [Breach - the hackable browser](http://breach.cc/).
