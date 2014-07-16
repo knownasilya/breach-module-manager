@@ -16,3 +16,15 @@ __STATE: NOT USABLE__
 * [DONE] Use own cache for modules instead of `$HOME/.npm/-/all/.cache.json`
 * Create interface :)
 * Look into hooking it up to core somehow, see [issue #4](https://github.com/mblarsen/breach-module-manager/issues/4).
+
+## Contributing
+
+```bash
+npm install
+npm test
+```
+
+Add to breach with `local:~/breach-module-manager` via the module install input
+on the `breach://modulea` page. Test using the 'out' link and `npm test`. Also `npm start`
+spins up the web app in stand alone mode, you you could always open the web app via
+the url presented on the 'out' console.
