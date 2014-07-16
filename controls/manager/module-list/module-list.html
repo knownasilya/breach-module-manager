@@ -2,6 +2,8 @@
 <link rel="import" href="../../elements/core-list/core-list.html">
 <link rel="import" href="../../elements/core-item/core-item.html">
 <link rel="import" href="../../elements/core-ajax/core-ajax.html">
+<link rel="import" href="../../elements/paper-button/paper-button.html">
+<link rel="import" href="../../elements/paper-dialog/paper-dialog.html">
 
 <polymer-element name="module-list" noscript>
   <template>
@@ -21,15 +23,55 @@
       .item {
         cursor: pointer;
         border-bottom: 1px solid #ccc;
-        padding: 1em;
+        padding: 0.6em 0.8em;
+      }
+
+      .module-name {
+        line-height: 2.4em;
+      }
+
+      paper-button.colored {
+        color: #4285F4;
+        fill: #4285F4;
+      }
+
+      paper-button[raisedButton].colored {
+        background: #4285F4;
+        color: #FFF;
       }
     </style>
 
     <core-ajax url="/modules" auto handleAs="json" response="{{modules}}"></core-ajax>
     <core-list data="{{modules}}" height="50">
       <template>
-        <div class="item {{ {selected: selected} | tokenList }}">{{name}}</div>
+        <div class="item" horizontal layout>
+          <div class="module-name {{ {selected: selected} | tokenList }}" flex>{{name}}</div>
+          <div class="controls">
+            <paper-button class="colored" label="install" on-click="{{installClickHandler}}"></paper-button>
+          </div>
+        </div>
+
+        <paper-dialog id="installDialog" heading="Proceed with installation?" transition="paper-transition-bottom">
+          <p>
+            Would you like to install this module?
+          </p>
+
+          <div class="footer" horizontal layout>
+            <paper-button label="Decline" affirmative></paper-button>
+            <div flex></div>
+            <paper-button label="Accept" class="colored" raisedButton affirmative autofocus></paper-button>
+          </div>
+        </paper-dialog>
       </template>
     </core-list>
   </template>
+  <script>
+    Polymer('module-list', {
+      installClickHandler: function(event, detail, sender) {
+        var dialog = this.shadowRoot.querySelector('#installDialog');
+
+        dialog.toggle();
+      }
+    });
+  </script>
 </polymer-element>
