@@ -19,12 +19,12 @@ __STATE: NOT USABLE__
 
 ## Contributing
 
-```bash
+```no-highlight
 npm install
 npm test
 ```
 
 Add to breach with `local:~/breach-module-manager` via the module install input
-on the `breach://modulea` page. Test using the 'out' link and `npm test`. Also `npm start`
-spins up the web app in stand alone mode, you you could always open the web app via
+on the `breach://modules` page. Test using the 'out' link and `npm test`. Also `npm start`
+spins up the web app in stand alone mode, and you could always open the web app via
 the url presented on the 'out' console.
