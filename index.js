@@ -14,6 +14,7 @@ var common = require('breach_module/lib/common');
 var _ = require('lodash');
 var cache = require('./lib/cache');
 var initApp = require('./lib/app');
+var categories = require('./lib/categories');
 var out = common.log.out;
 var error = common.log.error;
 
@@ -24,7 +25,9 @@ function bootstrap(server) {
     breach.expose('init', function (src, args, cb) {
       cache.search('manager').then(function (result) {
         var moduleNames = _.map(result, function (pkg) { return pkg.name + '@' + pkg['dist-tags'].latest; });
-        out('Found: ' + moduleNames.join(', '));
+
+        out('Found: (' + moduleNames.length + ') ' + moduleNames.join(', '));
+        out('Categories: ' + categories(result, 10, [cache.moduleKeyword]));
         cb();
       });
 
