@@ -11,6 +11,7 @@ var breach = require('breach_module');
 var socket = require('socket.io');
 var async = require('async');
 var request = require('request');
+var normalize = require('npm-normalize');
 var common = require('breach_module/lib/common');
 var _ = require('lodash');
 var cache = require('./lib/cache');
@@ -32,9 +33,10 @@ function bootstrap(server) {
           // TODO: stream the modules by page, sending a page (~25 items, maybe configurable later) at a time
           cache.all().then(function (result) {
             var modules = _.map(result, function (pkg) {
+              var meta = normalize(pkg);
               return {
-                name: pkg.name,
-                version: pkg['dist-tags'].latest,
+                name: meta.name,
+                version: meta.version,
                 selected: false
               };
             });
