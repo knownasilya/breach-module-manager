@@ -15,39 +15,9 @@
     <link rel="import" href="../elements/paper-button/paper-button.html">
     <link rel="import" href="../elements/core-icon/core-icon.html">
     <link rel="import" href="module-list/module-list.html">
-    <style>
-      body {
-        font-family: 'Roboto', sans-serif;
-      }
-
-      .container {
-        padding: 0;
-      }
-
-      #module-search {
-        padding: 1em;
-      }
-
-      #module-search paper-button {
-        margin-top: 1em;
-      }
-
-      paper-button.colored {
-        color: #4285F4;
-        fill: #4285F4;
-      }
-
-      paper-button[raisedButton].colored {
-        background: #4285F4;
-        color: #FFF;
-      }
-
-      paper-item[active] {
-        font-weight: bold;
-      }
-    </style>
+    <link rel="stylesheet" href="styles/main.css">
   </head>
-  <body>
+  <body unresolved>
     <core-scaffold>
       <core-header-panel navigation flex mode="seamed">
         <core-toolbar>Module Manager</core-toolbar>
