@@ -7,36 +7,11 @@
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <script src="../elements/platform/platform.js"></script>
-    <link rel="import" href="../elements/core-scaffold/core-scaffold.html">
-    <link rel="import" href="../elements/core-header-panel/core-header-panel.html">
-    <link rel="import" href="../elements/core-menu/core-menu.html">
-    <link rel="import" href="../elements/paper-item/paper-item.html">
-    <link rel="import" href="../elements/paper-input/paper-input.html">
-    <link rel="import" href="../elements/paper-button/paper-button.html">
-    <link rel="import" href="../elements/core-icon/core-icon.html">
-    <link rel="import" href="module-list/module-list.html">
+    <link rel="import" href="module-manager/module-manager.html">
     <link rel="stylesheet" href="styles/main.css">
   </head>
   <body unresolved>
-    <core-scaffold>
-      <core-header-panel navigation flex mode="seamed">
-        <core-toolbar>Module Manager</core-toolbar>
-        <core-menu theme="core-light-theme" selected="1">
-          <paper-item icon="check-circle-outline-blank" label="Core Modules"></paper-item>
-          <paper-item icon="view-module" label="User Modules" active></paper-item>
-        </core-menu>
-      </core-header-panel>
-      <div tool><core-icon icon="search"></core-icon> User Modules</div>
-
-      <div class="container">
-        <form id="module-search" horizontal layout center-justified>
-          <paper-input id="query" type="text" label="Search for module, e.g. tabs" floatingLabel="true"></paper-input>
-          <paper-button type="submit" class="colored" label="Search"></paper-button>
-        </form>
-        <module-list></module-list>
-      </div>
-    </core-scaffold>
-
+    <module-manager></module-manager>
     <script src="../elements/socket.io-client/socket.io.js"></script>
     <script>
       var socket = io('{{url}}');
