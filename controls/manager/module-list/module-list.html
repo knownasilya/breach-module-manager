@@ -47,10 +47,11 @@
       ready: function () {
         var self = this;
         
-        socket.emit('handshake');
+        socket.emit('handshake', 'module_manager');
         
-        socket.on('modules-all', function (modules) {
-          self.modules = modules; 
+        socket.on('modules-all', function (result) {
+          self.modules = result.modules; 
+          self.categories = result.categories;
         });
       },
 

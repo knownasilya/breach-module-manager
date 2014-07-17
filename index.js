@@ -27,8 +27,9 @@ function bootstrap(server) {
     breach.expose('init', function (src, args, cb) {
       
       io.sockets.on('connection', function (socket) {
-        socket.on('handshake', function () {
-          console.log(socket);
+        socket.on('handshake', function (handshakeId) {
+          out('Connected to `' + handshakeId + '` via websocket.');
+          // TODO: stream the modules by page, sending a page (~25 items, maybe configurable later) at a time
           cache.all().then(function (result) {
             var modules = _.map(result, function (pkg) {
               return {
@@ -38,7 +39,11 @@ function bootstrap(server) {
               };
             });
 
-            socket.emit('modules-all', modules);
+            var cats = categories(result, 5, [cache.moduleKeyword]).map(function (catName) {
+              return { name: catName };
+            });
+
+            socket.emit('modules-all', { modules: modules, categories: cats });
           });
         });
       }); 
