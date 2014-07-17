@@ -8,6 +8,7 @@
   "dependencies": {
     "polymer": "Polymer/polymer#~0.3.4",
     "core-elements": "Polymer/core-elements#~0.3.4",
-    "paper-elements": "Polymer/paper-elements#~0.3.4"
+    "paper-elements": "Polymer/paper-elements#~0.3.4",
+    "socket.io-client": "~1.0.6"
   }
 }

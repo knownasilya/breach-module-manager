@@ -4,8 +4,9 @@
 <link rel="import" href="../../elements/core-ajax/core-ajax.html">
 <link rel="import" href="../../elements/paper-button/paper-button.html">
 <link rel="import" href="../../elements/paper-dialog/paper-dialog.html">
+<link rel="import" href="../../elements/core-collapse/core-collapse.html">
 
-<polymer-element name="module-list" noscript>
+<polymer-element name="module-list">
   <template>
     <style>
       core-list {
@@ -16,14 +17,21 @@
         border-bottom-width: 0;
       }
 
-      .selected {
-        font-weight: bold;
+      .core-item {
+        border-bottom: 1px solid #ccc;
+      }
+
+      .core-item:hover {
+        background-color: #F5F5F7;
       }
 
       .item {
         cursor: pointer;
-        border-bottom: 1px solid #ccc;
         padding: 0.6em 0.8em;
+      }
+
+      .details-collapse div {
+        padding: 0.8em;
       }
 
       .module-name {
@@ -41,37 +49,75 @@
       }
     </style>
 
-    <core-ajax url="/modules" auto handleAs="json" response="{{modules}}"></core-ajax>
     <core-list data="{{modules}}" height="50">
       <template>
-        <div class="item" horizontal layout>
-          <div class="module-name {{ {selected: selected} | tokenList }}" flex>{{name}}</div>
-          <div class="controls">
-            <paper-button class="colored" label="install" on-click="{{installClickHandler}}"></paper-button>
+        <div class="core-item">
+          <div class="item" horizontal layout>
+            <div class="module-name" on-click="{{toggleDetails}}" flex>{{name}}</div>
+            <div class="controls">
+              <paper-button class="colored" label="install" on-click="{{installClickHandler}}"></paper-button>
+            </div>
           </div>
+
+          <core-collapse class="details-collapse">
+            <div>
+              Latest Version: {{version}}
+            </div>
+          </core-collapse>
         </div>
-
-        <paper-dialog id="installDialog" heading="Proceed with installation?" transition="paper-transition-bottom">
-          <p>
-            Would you like to install this module?
-          </p>
-
-          <div class="footer" horizontal layout>
-            <paper-button label="Decline" affirmative></paper-button>
-            <div flex></div>
-            <paper-button label="Accept" class="colored" raisedButton affirmative autofocus></paper-button>
-          </div>
-        </paper-dialog>
       </template>
     </core-list>
+
+    <paper-dialog id="installDialog" heading="Install" transition="paper-transition-bottom">
+      <p>
+        Would you like to install this module?
+      </p>
+
+      <div class="footer" horizontal layout>
+        <paper-button label="Decline" affirmative></paper-button>
+        <div flex></div>
+        <paper-button label="Accept" class="colored" raisedButton affirmative autofocus></paper-button>
+      </div>
+    </paper-dialog>
   </template>
+
   <script>
     Polymer('module-list', {
+      ready: function () {
+        var self = this;
+        
+        socket.emit('handshake');
+        
+        socket.on('modules-all', function (modules) {
+          self.modules = modules; 
+        });
+      },
+
       installClickHandler: function(event, detail, sender) {
-        var dialog = this.shadowRoot.querySelector('#installDialog');
+        var dialog = this.$.installDialog;
 
         dialog.toggle();
+      },
+
+      toggleDetails: function (event, detail, sender) {
+        var collapse = closest(sender, function (el) {
+          if (el.querySelector('.details-collapse')) {
+            return el.querySelector('.details-collapse');
+          }
+          else if (el.nextElementSibling.classList.contains('details-collapse')) {
+            return el.nextElementSibling;
+          }
+
+          return el && el.classList && el.classList.contains('details-collapse');
+        });
+        
+        collapse.toggle();
       }
     });
+
+    function closest(element, cb) {
+      var result = cb(element);
+      return element && (result ? (result instanceof HTMLElement ? result : element) : closest(element.parentNode, cb));
+    }
   </script>
 </polymer-element>

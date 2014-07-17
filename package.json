@@ -27,6 +27,7 @@
     "breach_module": "^0.3.x",
     "express": "^4.6.1",
     "fuzzy-filter": "0.0.3",
+    "hbs": "^2.7.0",
     "lodash": "^2.4.1",
     "method-override": "^2.1.1",
     "promise": "^5.0.0",

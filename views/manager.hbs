@@ -21,7 +21,25 @@
       }
 
       .container {
+        padding: 0;
+      }
+
+      #module-search {
         padding: 1em;
+      }
+
+      #module-search paper-button {
+        margin-top: 1em;
+      }
+
+      paper-button.colored {
+        color: #4285F4;
+        fill: #4285F4;
+      }
+
+      paper-button[raisedButton].colored {
+        background: #4285F4;
+        color: #FFF;
       }
 
       paper-item[active] {
@@ -41,12 +59,17 @@
       <div tool><core-icon icon="search"></core-icon> User Modules</div>
 
       <div class="container">
-        <form>
+        <form id="module-search" horizontal layout center-justified>
           <paper-input id="query" type="text" label="Search for module, e.g. tabs" floatingLabel="true"></paper-input>
-          <paper-button type="submit" label="Search"></paper-button>
+          <paper-button type="submit" class="colored" label="Search"></paper-button>
         </form>
         <module-list></module-list>
       </div>
     </core-scaffold>
+
+    <script src="../elements/socket.io-client/socket.io.js"></script>
+    <script>
+      var socket = io('{{url}}');
+    </script>
   </body>
 </html>

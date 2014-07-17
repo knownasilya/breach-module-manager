@@ -8,6 +8,7 @@
 'use strict';
 
 var breach = require('breach_module');
+var socket = require('socket.io');
 var async = require('async');
 var request = require('request');
 var common = require('breach_module/lib/common');
@@ -20,10 +21,29 @@ var error = common.log.error;
 
 function bootstrap(server) {
   var port = server.address().port;
+  var io = socket.listen(server);
 
   breach.init(function () {
     breach.expose('init', function (src, args, cb) {
-      cache.search('manager').then(function (result) {
+      
+      io.sockets.on('connection', function (socket) {
+        socket.on('handshake', function () {
+          console.log(socket);
+          cache.all().then(function (result) {
+            var modules = _.map(result, function (pkg) {
+              return {
+                name: pkg.name,
+                version: pkg['dist-tags'].latest,
+                selected: false
+              };
+            });
+
+            socket.emit('modules-all', modules);
+          });
+        });
+      }); 
+
+      cache.all().then(function (result) {
         var moduleNames = _.map(result, function (pkg) { return pkg.name + '@' + pkg['dist-tags'].latest; });
 
         out('Found: (' + moduleNames.length + ') ' + moduleNames.join(', '));
