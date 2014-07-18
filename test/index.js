@@ -1,5 +1,5 @@
 'use strict';
 
-var test = require('tape');
+var test = require('prova');
 
 test('Unit', require('./unit'));
