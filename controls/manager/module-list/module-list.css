@@ -36,3 +36,9 @@ paper-button[raisedButton].colored {
   background: #4285F4;
   color: #FFF;
 }
+
+web-loader {
+  position: absolute;
+  top: 20%;
+  right: 50%;
+}

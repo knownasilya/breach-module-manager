@@ -5,11 +5,13 @@
 <link rel="import" href="../../elements/paper-button/paper-button.html">
 <link rel="import" href="../../elements/paper-dialog/paper-dialog.html">
 <link rel="import" href="../../elements/core-collapse/core-collapse.html">
+<link rel="import" href="../../elements/web-loader/src/web-loader.html">
 
 <polymer-element name="module-list">
   <template>
     <link rel="stylesheet" href="module-list.css">
 
+    <template if="{{!showLoader}}">
     <core-list data="{{modules}}" height="50">
       <template>
         <div class="core-item">
@@ -40,10 +42,18 @@
         <paper-button label="Accept" class="colored" raisedButton affirmative autofocus></paper-button>
       </div>
     </paper-dialog>
+    </template>
+
+    <template if="{{showLoader}}">
+      <web-loader type="dot">
+    </template>
   </template>
 
   <script>
     Polymer('module-list', {
+      modules: [],
+      showLoader: true,
+
       ready: function () {
         var self = this;
         
@@ -52,6 +62,12 @@
         socket.on('modules-all', function (result) {
           self.modules = result.modules; 
           self.categories = result.categories;
+          self.showLoader = false;
+        });
+
+        socket.on('modules-single', function (result) {
+          self.modules.push(result);
+          self.showLoader = false;
         });
       },
 

@@ -14,6 +14,7 @@ var request = require('request');
 var normalize = require('npm-normalize');
 var common = require('breach_module/lib/common');
 var _ = require('lodash');
+var es = require('event-stream');
 var cache = require('./lib/cache');
 var initApp = require('./lib/app');
 var categories = require('./lib/categories');
@@ -26,27 +27,22 @@ function bootstrap(server) {
 
   breach.init(function () {
     breach.expose('init', function (src, args, cb) {
-      
       io.sockets.on('connection', function (socket) {
         socket.on('handshake', function (handshakeId) {
           out('Connected to `' + handshakeId + '` via websocket.');
           // TODO: stream the modules by page, sending a page (~25 items, maybe configurable later) at a time
-          cache.all().then(function (result) {
-            var modules = _.map(result, function (pkg) {
-              var meta = normalize(pkg);
-              return {
-                name: meta.name,
-                version: meta.version,
-                selected: false
-              };
+          cache.all(function (data) {
+            if (typeof data === 'object') {
+              var normalized = normalize(data);
+              socket.emit('modules-single', { name: normalized.name, version: normalized.version, selected: false });
+            }
+            return data;                    
+          }).then(normalizeResult)
+            .then(function (result) {
+              if (result && !result.pipe) {
+                socket.emit('modules-all', { modules: modules, categories: cats });
+              }
             });
-
-            var cats = categories(result, 5, [cache.moduleKeyword]).map(function (catName) {
-              return { name: catName };
-            });
-
-            socket.emit('modules-all', { modules: modules, categories: cats });
-          });
         });
       }); 
 
@@ -74,6 +70,32 @@ function bootstrap(server) {
       common.exit(0);
     });
   });
+}
+
+function normalizeResult(result) {
+  if (!result) {
+    return;
+  }
+
+  if (result.pipe) {
+    return result;
+  } else {
+    var modules = _.map(result, function (pkg) {
+      var meta = normalize(pkg);
+
+      return {
+        name: meta.name,
+        version: meta.version,
+        selected: false
+      };
+    });
+
+    var cats = categories(result, 5, [cache.moduleKeyword]).map(function (catName) {
+      return { name: catName };
+    });
+
+    return { modules: modules, categories: cat };
+  }
 }
 
 // Run web-server for module webapp
