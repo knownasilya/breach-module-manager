@@ -20,6 +20,16 @@
     "email": "mblarsen@gmail.com",
     "url": "http://github.com/mblarsen"
   },
+  "contributors": [
+    {
+      "name": "Ilya Radchenko",
+      "email": "ilya@burstcreations.com"
+    },
+    {
+      "name": "Michael Bøcker-Larsen",
+      "email": "mblarsen@gmail.com"
+    }
+  ],
   "license": "MIT",
   "dependencies": {
     "JSONStream": "^0.8.4",
