@@ -33,6 +33,7 @@
     "lodash": "^2.4.1",
     "method-override": "^2.1.1",
     "npm": "^1.4.21",
+    "npm-local-cache": "^0.1.2",
     "npm-normalize": "^0.2.3",
     "promise": "^5.0.0",
     "request": "^2.37.0",
