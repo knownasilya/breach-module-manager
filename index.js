@@ -8,15 +8,12 @@
 'use strict';
 
 var moduleKeyword = 'breach-module';
-
 var breach = require('breach_module');
 var socket = require('socket.io');
 var async = require('async');
-var request = require('request');
 var normalize = require('npm-normalize');
 var common = require('breach_module/lib/common');
 var _ = require('lodash');
-var es = require('event-stream');
 var cache = require('npm-local-cache')({ keywords: [moduleKeyword] });
 var initApp = require('./lib/app');
 var categories = require('./lib/categories');
@@ -35,27 +32,33 @@ function bootstrap(server) {
           // TODO: stream the modules by page, sending a page (~25 items, maybe configurable later) at a time
           cache.init().then(function (data) {
             var data = cache.getPackages();
-            if (typeof data === 'object') {
-              var normalized = normalize(data);
-              socket.emit('modules-single', { name: normalized.name, version: normalized.version, selected: false });
-            }
-            return data;                    
-          }).then(normalizeResult)
-            .then(function (result) {
-              if (result && !result.pipe) {
-                socket.emit('modules-all', { modules: modules, categories: cats });
-              }
+            var keys = Object.keys(data);
+            var results = keys.map(function (key) {
+              return data[key];
             });
+            return results;
+          }, function (err) {
+            console.error(err);
+            cb(err);
+          })
+          .then(normalizeResult, function (err) {
+            console.error(err);
+            cb(err);
+          })
+          .then(function (result) {
+            if (result && !result.pipe) {
+              socket.emit('modules-all', result);
+            }
+            cb();
+          }, function (err) {
+            console.error(err);
+            cb(err);
+          })
+          .catch(function (err) {
+            console.error(err);
+            cb(err);
+          });
         });
-      }); 
-
-      cache.init().then(function (result) {
-        var result = cache.getPackages();
-        var moduleNames = _.map(result, function (pkg) { return pkg.name + '@' + pkg['dist-tags'].latest; });
-
-        out('Found: (' + moduleNames.length + ') ' + moduleNames.join(', '));
-        out('Categories: ' + categories(result, 10, [moduleKeyword]));
-        cb();
       });
 
       breach.module('core').call('tabs_new_tab_url', { 
@@ -93,12 +96,13 @@ function normalizeResult(result) {
         selected: false
       };
     });
+    console.log(modules);
 
     var cats = categories(result, 5, [moduleKeyword]).map(function (catName) {
       return { name: catName };
     });
 
-    return { modules: modules, categories: cat };
+    return { modules: modules, categories: cats };
   }
 }
 
